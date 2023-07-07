@@ -3,6 +3,7 @@ package com.example.smoothie.api.smoothie;
 import com.example.smoothie.api.smoothie.model.SmoothieDetailsUpdateRequestBody;
 import com.example.smoothie.api.smoothie.model.SmoothieResponseBodyObject;
 import com.example.smoothie.smoothie.SmoothieService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class SmoothieController {
     }
 
     @PutMapping("/{smoothieId}/details")
-    public void updateSmoothie(@PathVariable Long smoothieId, @RequestBody SmoothieDetailsUpdateRequestBody smoothieDetailsUpdateRequestBody) {
+    public void updateSmoothie(@PathVariable Long smoothieId, @Valid @RequestBody SmoothieDetailsUpdateRequestBody smoothieDetailsUpdateRequestBody) {
         var smoothieDetails = this.smoothieMapper.toSmoothieDetails(smoothieDetailsUpdateRequestBody);
         this.smoothieService.updateSmoothie(smoothieId, smoothieDetails);
     }

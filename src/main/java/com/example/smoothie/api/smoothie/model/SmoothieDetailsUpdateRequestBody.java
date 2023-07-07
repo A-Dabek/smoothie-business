@@ -1,4 +1,13 @@
 package com.example.smoothie.api.smoothie.model;
 
-public record SmoothieDetailsUpdateRequestBody(String name, String description, int protein, int fat, int carbs) {
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record SmoothieDetailsUpdateRequestBody(
+        @NotBlank String name,
+        @NotNull String description,
+        @NotNull @Min(value = 0L) Integer protein,
+        @NotNull @Min(value = 0L) Integer fat,
+        @NotNull @Min(value = 0L) Integer carbs) {
 }
