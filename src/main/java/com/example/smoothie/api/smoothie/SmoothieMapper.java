@@ -1,7 +1,9 @@
 package com.example.smoothie.api.smoothie;
 
+import com.example.smoothie.api.smoothie.model.SmoothieDetailsUpdateRequestBody;
 import com.example.smoothie.api.smoothie.model.SmoothieResponseBodyObject;
 import com.example.smoothie.smoothie.Smoothie;
+import com.example.smoothie.smoothie.SmoothieDetails;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,4 +20,6 @@ public interface SmoothieMapper {
     SmoothieResponseBodyObject toSmoothieResponseBodyObject(Smoothie smoothie);
 
     List<SmoothieResponseBodyObject> toSmoothieResponseBodyObject(Iterable<Smoothie> smoothie);
+
+    SmoothieDetails toSmoothieDetails(SmoothieDetailsUpdateRequestBody smoothieDetailsUpdateRequestBody);
 }
