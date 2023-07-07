@@ -1,6 +1,5 @@
 package com.example.smoothie.smoothie;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +13,6 @@ public class SmoothieService {
     }
 
     public List<Smoothie> findAll() {
-        return smoothieRepository.findAll(Pageable.ofSize(1)).stream().toList();
+        return smoothieRepository.findAll();
     }
 }
