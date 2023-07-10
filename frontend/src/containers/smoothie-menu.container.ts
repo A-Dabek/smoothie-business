@@ -5,7 +5,7 @@ import {SmoothieItemComponent} from "../components/smoothie-item.component";
 @Component({
   selector: 'smoothie-menu-container',
   template: `
-    <smoothie-item *ngFor="let smoothie of smoothies"></smoothie-item>
+    <smoothie-item class="block" *ngFor="let smoothie of smoothies"></smoothie-item>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,

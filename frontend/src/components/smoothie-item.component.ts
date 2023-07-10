@@ -2,18 +2,13 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
 
 @Component({
   selector: 'smoothie-item',
+  styles: [`
+    :host {
+      display: block;
+    }
+  `],
   template: `
     <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          Component
-        </p>
-        <button class="card-header-icon" aria-label="more options">
-      <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
-        </button>
-      </header>
       <div class="card-content">
         <div class="media">
           <div class="media-left">
