@@ -19,7 +19,7 @@ public class SmoothieController {
         this.smoothieService = smoothieService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<SmoothieResponseBodyObject> getAllSmoothies() {
         var smoothies = this.smoothieService.findAll();
         return this.smoothieMapper.toSmoothieResponseBodyObject(smoothies);

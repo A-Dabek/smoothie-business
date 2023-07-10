@@ -45,7 +45,7 @@ class SmoothieControllerTest {
 
     @Test
     void getAllSmoothies() throws Exception {
-        mockMvc.perform(get("/smoothies/"))
+        mockMvc.perform(get("/smoothies"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name").value("Smoothie 1"))
