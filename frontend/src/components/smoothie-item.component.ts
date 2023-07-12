@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
+import {SmoothieViewModel} from "../model/smoothie-view-model";
 
 @Component({
   selector: 'smoothie-item',
@@ -6,28 +7,32 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
     :host {
       display: block;
     }
+
+    dd {
+      margin-left: 0;
+    }
   `],
   template: `
     <div class="card">
       <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image is-48x48">
-              <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-            </figure>
-          </div>
-          <div class="media-content">
-            <p class="title is-4">John Smith</p>
-            <p class="subtitle is-6">@johnsmith</p>
-          </div>
-        </div>
+        <p class="title is-4">{{smoothie.name}}</p>
+        <p class="subtitle is-6">{{smoothie.description}}</p>
 
         <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-          <a href="#">#css</a> <a href="#">#responsive</a>
-          <br>
-          <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+          <div class="columns">
+            <div class="column is-6">
+              <dl class="columns is-multiline is-mobile">
+                <dt class="column is-6">Calories</dt>
+                <dd class="column has-text-right is-6">{{calories}} kcal</dd>
+                <dt class="column is-6">Protein</dt>
+                <dd class="column has-text-right is-6">{{smoothie.protein}} g</dd>
+                <dt class="column is-6">Fat</dt>
+                <dd class="column has-text-right is-6">{{smoothie.fat}} g</dd>
+                <dt class="column is-6">Carbs</dt>
+                <dd class="column has-text-right is-6">{{smoothie.carbs}} g</dd>
+              </dl>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -36,5 +41,9 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
   standalone: true,
 })
 export class SmoothieItemComponent {
+  @Input() smoothie!: SmoothieViewModel;
 
+  get calories(): number {
+    return this.smoothie.protein * 4 + this.smoothie.fat * 9 + this.smoothie.carbs * 4;
+  }
 }
