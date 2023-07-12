@@ -1,7 +1,8 @@
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {ChangeDetectionStrategy, Component, inject, OnInit} from "@angular/core";
-import {Observable, of} from "rxjs";
+import {BehaviorSubject, Observable, of, switchMap, tap} from "rxjs";
 import {EditableSmoothieItemComponent} from "../components/editable-smoothie-item.component";
+import {SmoothieDetailsUpdate} from "../model/smoothie-details-update";
 import {SmoothieViewModel} from "../model/smoothie-view-model";
 import {SmoothieService} from "../services/smoothie.service";
 
@@ -9,7 +10,10 @@ import {SmoothieService} from "../services/smoothie.service";
   selector: 'smoothie-menu-container',
   template: `
     <ng-container *ngIf="smoothies$ | async as smoothies">
-      <editable-smoothie-item class="block" *ngFor="let smoothie of smoothies" [smoothie]="smoothie">
+      <editable-smoothie-item class="block" *ngFor="let smoothie of smoothies"
+                              [smoothie]="smoothie"
+                              [loading]="loading"
+                              (formSubmit)="onSubmit(smoothie, $event)">
       </editable-smoothie-item>
     </ng-container>
   `,
@@ -24,10 +28,17 @@ import {SmoothieService} from "../services/smoothie.service";
 })
 export class SmoothieMenuContainer implements OnInit {
 
+  loading = true;
   smoothies$: Observable<SmoothieViewModel[]> = of([]);
+  private refresh$ = new BehaviorSubject<void>(undefined);
   private smoothieService = inject(SmoothieService);
 
   ngOnInit(): void {
-    this.smoothies$ = this.smoothieService.getSmoothies();
+    this.smoothies$ = this.refresh$.pipe(switchMap(() => this.smoothieService.getSmoothies()), tap(() => this.loading = false));
+  }
+
+  onSubmit(viewModel: SmoothieViewModel, value: SmoothieDetailsUpdate) {
+    this.loading = true;
+    this.smoothieService.updateSmoothie(viewModel.id, value).subscribe(() => this.refresh$.next());
   }
 }

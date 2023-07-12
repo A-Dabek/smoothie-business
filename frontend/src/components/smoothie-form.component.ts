@@ -110,7 +110,7 @@ export class SmoothieFormComponent {
     carbs: this.fb.control(0, [Validators.required, Validators.min(0)]),
   });
 
-  @Output() submit = new EventEmitter<SmoothieDetailsUpdate>();
+  @Output() formSubmit = new EventEmitter<SmoothieDetailsUpdate>();
   @Output() cancel = new EventEmitter<void>();
 
   constructor(private fb: NonNullableFormBuilder) {
@@ -124,6 +124,6 @@ export class SmoothieFormComponent {
   onSubmit() {
     if (this.form.invalid) return;
     const formValue = this.form.getRawValue()
-    this.submit.emit(formValue);
+    this.formSubmit.emit(formValue);
   }
 }
