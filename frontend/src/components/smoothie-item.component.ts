@@ -15,10 +15,15 @@ import {SmoothieViewModel} from "../model/smoothie-view-model";
   template: `
     <div class="card">
       <div class="card-content">
-        <p class="title is-4">{{smoothie.name}}</p>
-        <p class="subtitle is-6">{{smoothie.description}}</p>
+        <div class="is-flex is-justify-content-space-between">
+          <div>
+            <p class="title is-4">{{smoothie.name}}</p>
+            <p class="subtitle is-6">{{smoothie.description}}</p>
+          </div>
+          <ng-content></ng-content>
+        </div>
 
-        <div class="content">
+        <div class="content mt-3">
           <div class="columns">
             <div class="column is-6">
               <dl class="columns is-multiline is-mobile">
