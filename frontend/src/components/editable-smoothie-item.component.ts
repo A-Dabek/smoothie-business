@@ -13,17 +13,21 @@ import {SmoothieItemComponent} from "./smoothie-item.component";
     }
   `],
   template: `
-    <smoothie-item *ngIf="!editMode" class="block" [smoothie]="smoothie">
-      <button class="button is-warning" [ngClass]="{'is-loading': loading}" [disabled]="loading"
-              (click)="editMode = true">
-        <span>Edit</span>
-        <span class="icon is-small">
+    <div class="card">
+      <div class="card-content">
+        <smoothie-item *ngIf="!editMode" class="block" [smoothie]="smoothie">
+          <button class="button is-warning" [ngClass]="{'is-loading': loading}" [disabled]="loading"
+                  (click)="editMode = true">
+            <span>Edit</span>
+            <span class="icon is-small">
           <i class="fas fa-edit"></i>
         </span>
-      </button>
-    </smoothie-item>
-    <smoothie-form *ngIf="editMode" [smoothie]="smoothie" [disabled]="loading" (cancel)="editMode = false"
-                   (formSubmit)="onSubmit($event)"></smoothie-form>
+          </button>
+        </smoothie-item>
+        <smoothie-form *ngIf="editMode" [smoothie]="smoothie" [disabled]="loading" (cancel)="editMode = false"
+                       (formSubmit)="onSubmit($event)"></smoothie-form>
+      </div>
+    </div>
   `,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,15 +1,15 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {SmoothieManagerContainer} from "../containers/smoothie-manager.container";
+import {SmoothieMenuContainer} from "../containers/smoothie-menu.container";
 
 @Component({
   selector: 'smoothie-menu-view',
   template: `
-    <smoothie-manager-container></smoothie-manager-container>
+    <smoothie-menu-container></smoothie-menu-container>
   `,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    SmoothieManagerContainer
+    SmoothieMenuContainer
   ]
 })
 export class SmoothieMenuViewComponent {
