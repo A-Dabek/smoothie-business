@@ -10,7 +10,7 @@ import {SmoothieService} from "../services/smoothie.service";
   selector: 'smoothie-menu-container',
   template: `
     <ng-container *ngIf="smoothies$ | async as smoothies">
-      <editable-smoothie-item class="block" *ngFor="let smoothie of smoothies"
+      <editable-smoothie-item class="block" *ngFor="let smoothie of smoothies; trackBy: trackByFn"
                               [smoothie]="smoothie"
                               [loading]="loading"
                               (formSubmit)="onSubmit(smoothie, $event)">
@@ -32,6 +32,7 @@ export class SmoothieMenuContainer implements OnInit {
   smoothies$: Observable<SmoothieViewModel[]> = of([]);
   private refresh$ = new BehaviorSubject<void>(undefined);
   private smoothieService = inject(SmoothieService);
+  trackByFn = (index: number, item: SmoothieViewModel) => item.id;
 
   ngOnInit(): void {
     this.smoothies$ = this.refresh$.pipe(switchMap(() => this.smoothieService.getSmoothies()), tap(() => this.loading = false));

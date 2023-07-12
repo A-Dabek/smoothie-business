@@ -22,7 +22,7 @@ import {SmoothieItemComponent} from "./smoothie-item.component";
         </span>
       </button>
     </smoothie-item>
-    <smoothie-form *ngIf="editMode" [smoothie]="smoothie" (cancel)="editMode = false"
+    <smoothie-form *ngIf="editMode" [smoothie]="smoothie" [disabled]="loading" (cancel)="editMode = false"
                    (formSubmit)="onSubmit($event)"></smoothie-form>
   `,
   standalone: true,

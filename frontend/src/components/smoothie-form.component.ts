@@ -80,7 +80,7 @@ import {SmoothieViewModel} from "../model/smoothie-view-model";
 
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-primary" type="submit">Submit</button>
+              <button class="button is-primary" type="submit" [disabled]="disabled">Submit</button>
             </div>
             <div class="control">
               <button class="button is-secondary" (click)="cancel.emit()">Cancel</button>
@@ -110,6 +110,7 @@ export class SmoothieFormComponent {
     carbs: this.fb.control(0, [Validators.required, Validators.min(0)]),
   });
 
+  @Input() disabled = false;
   @Output() formSubmit = new EventEmitter<SmoothieDetailsUpdate>();
   @Output() cancel = new EventEmitter<void>();
 
