@@ -7,7 +7,7 @@ import {SmoothieViewModel} from "../model/smoothie-view-model";
 import {SmoothieService} from "../services/smoothie.service";
 
 @Component({
-  selector: 'smoothie-menu-container',
+  selector: 'smoothie-manager-container',
   template: `
     <ng-container *ngIf="smoothies$ | async as smoothies">
       <editable-smoothie-item class="block" *ngFor="let smoothie of smoothies; trackBy: trackByFn"
@@ -26,7 +26,7 @@ import {SmoothieService} from "../services/smoothie.service";
     EditableSmoothieItemComponent
   ]
 })
-export class SmoothieMenuContainer implements OnInit {
+export class SmoothieManagerContainer implements OnInit {
 
   loading = true;
   smoothies$: Observable<SmoothieViewModel[]> = of([]);

@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
   selector: 'app-root',
   template: `
     <main class="container is-max-desktop pt-5">
-      <smoothie-menu-container></smoothie-menu-container>
+      <router-outlet></router-outlet>
     </main>
   `
 })
