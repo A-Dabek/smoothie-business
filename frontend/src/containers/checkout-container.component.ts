@@ -1,16 +1,21 @@
-import {NgClass, NgIf} from "@angular/common";
+import {AsyncPipe, NgClass, NgIf} from "@angular/common";
 import {ChangeDetectionStrategy, Component, inject, OnInit} from "@angular/core";
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {catchError, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
+import {SmoothieSummaryComponent} from "../components/smoothie-summary.component";
 import {OrderRequestBody} from "../model/order-request-body";
+import {SmoothieSummaryViewModel} from "../model/smoothie-summary-view-model";
 import {OrderService} from "../services/order.service";
+import {SmoothieStateService} from "../services/smoothie-state.service";
 
 @Component({
   selector: 'checkout-container',
   template: `
     <div class="card">
       <div class="card-content">
+        <smoothie-summary *ngIf="smoothiesInCart$ | async as smoothies" [smoothies]="smoothies"/>
+
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="field">
             <label class="label">Name</label>
@@ -81,7 +86,9 @@ import {OrderService} from "../services/order.service";
   imports: [
     ReactiveFormsModule,
     NgIf,
-    NgClass
+    NgClass,
+    SmoothieSummaryComponent,
+    AsyncPipe
   ]
 })
 export class CheckoutContainerComponent implements OnInit {
@@ -96,7 +103,19 @@ export class CheckoutContainerComponent implements OnInit {
     city: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
     zip: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
   });
+
   private orderService = inject(OrderService);
+  private stateService = inject(SmoothieStateService);
+  smoothiesInCart$: Observable<SmoothieSummaryViewModel[]> = this.stateService.smoothies$.pipe(
+    map(smoothies => {
+      return smoothies.filter(smoothie => this.cart[smoothie.id]).map(smoothie => ({
+        name: smoothie.name,
+        description: smoothie.description,
+        price: smoothie.price,
+        count: this.cart[smoothie.id]
+      }));
+    })
+  );
 
   ngOnInit() {
     const savedCart = localStorage.getItem('cart');
