@@ -24,6 +24,9 @@ public class Smoothie {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private Integer price;
+
     @Embedded
     private Nutritions nutritions;
 }

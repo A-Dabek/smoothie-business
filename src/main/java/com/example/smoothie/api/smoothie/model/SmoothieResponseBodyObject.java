@@ -6,5 +6,6 @@ public record SmoothieResponseBodyObject(
         String description,
         Integer protein,
         Integer fat,
-        Integer carbs) {
+        Integer carbs,
+        Integer price) {
 }

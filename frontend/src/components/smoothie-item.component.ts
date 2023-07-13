@@ -10,9 +10,12 @@ import {SmoothieViewModel} from "../model/smoothie-view-model";
   `],
   template: `
     <div class="is-flex is-justify-content-space-between">
-      <div>
-        <p class="title is-4">{{smoothie.name}}</p>
-        <p class="subtitle is-6">{{smoothie.description}}</p>
+      <div class="is-flex">
+        <p class="mr-3 title is-3">{{'$' + price}}</p>
+        <div>
+          <p class="title is-4">{{smoothie.name}}</p>
+          <p class="subtitle is-6">{{smoothie.description}}</p>
+        </div>
       </div>
       <ng-content></ng-content>
     </div>
@@ -42,5 +45,9 @@ export class SmoothieItemComponent {
 
   get calories(): number {
     return this.smoothie.protein * 4 + this.smoothie.fat * 9 + this.smoothie.carbs * 4;
+  }
+
+  get price(): string {
+    return (this.smoothie.price / 100).toFixed(2);
   }
 }

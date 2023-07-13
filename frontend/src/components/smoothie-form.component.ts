@@ -31,6 +31,18 @@ import {SmoothieViewModel} from "../model/smoothie-view-model";
       </div>
 
       <div class="field">
+        <label class="label">Price</label>
+        <div class="control">
+          <input class="input"
+                 [ngClass]="{'is-danger': form.controls.price.errors}"
+                 type="number"
+                 placeholder="protein"
+                 formControlName="price">
+        </div>
+        <p *ngIf="form.controls.price.errors" class="help is-danger">Provide non-negative value</p>
+      </div>
+
+      <div class="field">
         <label class="label">Protein</label>
         <div class="control">
           <input class="input"
@@ -88,6 +100,7 @@ export class SmoothieFormComponent {
   form = this.fb.group({
     name: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
     description: this.fb.control('', [Validators.required]),
+    price: this.fb.control(0, [Validators.required, Validators.min(0)]),
     protein: this.fb.control(0, [Validators.required, Validators.min(0)]),
     fat: this.fb.control(0, [Validators.required, Validators.min(0)]),
     carbs: this.fb.control(0, [Validators.required, Validators.min(0)]),

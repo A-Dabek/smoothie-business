@@ -1,6 +1,7 @@
 package com.example.smoothie.api.smoothie;
 
 import com.example.smoothie.api.smoothie.model.SmoothieDetailsUpdateRequestBody;
+import com.example.smoothie.order.OrderService;
 import com.example.smoothie.smoothie.Nutritions;
 import com.example.smoothie.smoothie.Smoothie;
 import com.example.smoothie.smoothie.SmoothieService;
@@ -33,12 +34,14 @@ class SmoothieControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private SmoothieService smoothieService;
+    @MockBean
+    private OrderService orderService;
 
     @BeforeEach
     void setUp() {
         when(smoothieService.findAll()).thenReturn(List.of(
-                new Smoothie(1L, "Smoothie 1", "Smoothie 1 description", new Nutritions(1, 1, 1)),
-                new Smoothie(2L, "Smoothie 2", "Smoothie 2 description", new Nutritions(2, 2, 2))
+                new Smoothie(1L, "Smoothie 1", "Smoothie 1 description", 123, new Nutritions(1, 1, 1)),
+                new Smoothie(2L, "Smoothie 2", "Smoothie 2 description", 234, new Nutritions(2, 2, 2))
         ));
         doNothing().when(smoothieService).updateSmoothie(anyLong(), any());
     }
@@ -59,42 +62,48 @@ class SmoothieControllerTest {
                 "",
                 0,
                 2,
-                3
+                3,
+                123
         );
         var validRequestBody = new SmoothieDetailsUpdateRequestBody(
                 "name",
                 "description",
                 1,
                 2,
-                3
+                3,
+                123
         );
         var noNameRequestBody = new SmoothieDetailsUpdateRequestBody(
                 "",
                 "description",
                 1,
                 2,
-                3
+                3,
+                123
         );
         var nullDescriptionRequestBody = new SmoothieDetailsUpdateRequestBody(
                 "name",
                 null,
                 1,
                 2,
-                3
+                3,
+                123
         );
         var missingNutritionRequestBody = new SmoothieDetailsUpdateRequestBody(
                 "name",
                 "description",
                 1,
                 null,
-                3
+                3,
+                123
         );
         var negativeNutritionRequestBody = new SmoothieDetailsUpdateRequestBody(
                 "name",
                 "description",
                 1,
                 2,
-                -3
+                -3,
+                123
         );
 
 

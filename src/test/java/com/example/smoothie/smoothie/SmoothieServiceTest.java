@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class SmoothieServiceTest {
 
     static List<Smoothie> entities = List.of(
-            new Smoothie(1L, "Banana", "Banana smoothie", new Nutritions(1, 2, 3)),
-            new Smoothie(2L, "Apple", "Apple smoothie", new Nutritions(4, 5, 6))
+            new Smoothie(1L, "Banana", "Banana smoothie", 123, new Nutritions(1, 2, 3)),
+            new Smoothie(2L, "Apple", "Apple smoothie", 123, new Nutritions(4, 5, 6))
     );
     @Autowired
     private SmoothieService smoothieService;
@@ -23,6 +23,7 @@ class SmoothieServiceTest {
 
     @BeforeEach
     void setUp() {
+        smoothieRepository.deleteAll();
         smoothieRepository.saveAll(entities);
     }
 
@@ -38,7 +39,7 @@ class SmoothieServiceTest {
         var updatedSmoothie = smoothies.get(0);
         assertEquals(entities.get(0).getName(), updatedSmoothie.getName());
 
-        SmoothieDetails smoothieDetails = new SmoothieDetails("Strawberry", "Strawberry smoothie", 10, 20, 30);
+        SmoothieDetails smoothieDetails = new SmoothieDetails("Strawberry", "Strawberry smoothie", 10, 20, 30, 123);
         smoothieService.updateSmoothie(1L, smoothieDetails);
 
         smoothies = smoothieService.findAll();

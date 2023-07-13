@@ -23,6 +23,7 @@ public class SmoothieService {
         smoothie.setName(smoothieDetails.name());
         smoothie.setDescription(smoothieDetails.description());
         smoothie.setNutritions(nutritions);
+        smoothie.setPrice(smoothieDetails.price());
         smoothieRepository.save(smoothie);
     }
 

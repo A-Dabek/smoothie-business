@@ -9,5 +9,6 @@ public record SmoothieDetailsUpdateRequestBody(
         @NotNull String description,
         @NotNull @Min(value = 0L) Integer protein,
         @NotNull @Min(value = 0L) Integer fat,
-        @NotNull @Min(value = 0L) Integer carbs) {
+        @NotNull @Min(value = 0L) Integer carbs,
+        @NotNull @Min(value = 0L) Integer price) {
 }

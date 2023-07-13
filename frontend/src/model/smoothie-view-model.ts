@@ -5,4 +5,5 @@ export interface SmoothieViewModel {
   protein: number;
   fat: number;
   carbs: number;
+  price: number;
 }

@@ -5,4 +5,5 @@ export interface SmoothieResponseBody {
   protein: number;
   fat: number;
   carbs: number;
+  price: number;
 }

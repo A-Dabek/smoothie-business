@@ -4,4 +4,5 @@ export interface SmoothieDetailsUpdate {
   protein: number;
   fat: number;
   carbs: number;
+  price: number;
 }
