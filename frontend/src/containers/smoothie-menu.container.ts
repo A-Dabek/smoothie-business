@@ -1,11 +1,11 @@
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {ChangeDetectionStrategy, Component, inject, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {BuyableSmoothieItemComponent} from "../components/buyable-smoothie-item.component";
 import {CheckoutComponent} from "../components/checkout.component";
 import {SmoothieViewModel} from "../model/smoothie-view-model";
-import {SmoothieService} from "../services/smoothie.service";
+import {SmoothieStateService} from "../services/smoothie-state.service";
 
 @Component({
   selector: 'smoothie-menu-container',
@@ -32,10 +32,10 @@ import {SmoothieService} from "../services/smoothie.service";
 export class SmoothieMenuContainer implements OnInit {
 
   checkoutCount = 0;
-  smoothies$: Observable<SmoothieViewModel[]> = of([]);
   cart: Record<number, number> = {};
-  private smoothieService = inject(SmoothieService);
   private router = inject(Router);
+  private stateService = inject(SmoothieStateService);
+  smoothies$: Observable<SmoothieViewModel[]> = this.stateService.smoothies$;
 
   trackByFn = (index: number, item: SmoothieViewModel) => item.id;
 
@@ -45,7 +45,6 @@ export class SmoothieMenuContainer implements OnInit {
       this.cart = JSON.parse(savedCart);
       this.recalculateCount();
     }
-    this.smoothies$ = this.smoothieService.getSmoothies();
   }
 
   addToCart(smoothie: SmoothieViewModel) {
