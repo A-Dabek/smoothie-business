@@ -2,6 +2,7 @@ import {NgClass, NgIf} from "@angular/common";
 import {ChangeDetectionStrategy, Component, inject, OnInit} from "@angular/core";
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {catchError, throwError} from "rxjs";
 import {OrderRequestBody} from "../model/order-request-body";
 import {OrderService} from "../services/order.service";
 
@@ -90,10 +91,10 @@ export class CheckoutContainerComponent implements OnInit {
   private router = inject(Router);
   private fb = inject(NonNullableFormBuilder);
   form = this.fb.group({
-    name: this.fb.control('', [Validators.required, Validators.pattern('/\S/')]),
-    street: this.fb.control('', [Validators.required, Validators.pattern('/\S/')]),
-    city: this.fb.control('', [Validators.required, Validators.pattern('/\S/')]),
-    zip: this.fb.control('', [Validators.required, Validators.pattern('/\S/')]),
+    name: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
+    street: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
+    city: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
+    zip: this.fb.control('', [Validators.required, Validators.pattern(/\S/)]),
   });
   private orderService = inject(OrderService);
 
@@ -101,6 +102,7 @@ export class CheckoutContainerComponent implements OnInit {
     const savedCart = localStorage.getItem('cart');
     if (!savedCart) {
       this.router.navigate(['/smoothies']);
+      return;
     }
     this.cart = JSON.parse(savedCart);
   }
@@ -112,12 +114,26 @@ export class CheckoutContainerComponent implements OnInit {
       ...this.form.getRawValue(),
       items: this.cart,
     };
-    this.orderService.createOrder(requestBody).subscribe(
-      () => this.router.navigate(['/smoothies']),
+    this.createOrder(requestBody).subscribe(
+      () => this.onSuccessfulOrder(),
     );
   }
 
   onCancel() {
+    this.router.navigate(['/smoothies']);
+  }
+
+  private createOrder(requestBody: OrderRequestBody) {
+    return this.orderService.createOrder(requestBody).pipe(
+      catchError(() => {
+        alert('Error while updating smoothie details!');
+        return throwError(() => new Error('Error while updating smoothie details!'));
+      })
+    );
+  }
+
+  private onSuccessfulOrder() {
+    localStorage.setItem('cart', '{}');
     this.router.navigate(['/smoothies']);
   }
 }

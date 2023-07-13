@@ -40,6 +40,11 @@ export class SmoothieMenuContainer implements OnInit {
   trackByFn = (index: number, item: SmoothieViewModel) => item.id;
 
   ngOnInit(): void {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      this.cart = JSON.parse(savedCart);
+      this.recalculateCount();
+    }
     this.smoothies$ = this.smoothieService.getSmoothies();
   }
 
@@ -59,5 +64,6 @@ export class SmoothieMenuContainer implements OnInit {
 
   private recalculateCount() {
     this.checkoutCount = Object.values(this.cart).reduce((a, b) => a + b, 0);
+    localStorage.setItem('cart', JSON.stringify(this.cart));
   }
 }
