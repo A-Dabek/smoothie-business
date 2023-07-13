@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
   selector: 'smoothie-checkout',
@@ -14,7 +14,7 @@ import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
     }
   `],
   template: `
-    <button class="button is-primary is-fullwidth">
+    <button class="button is-primary is-fullwidth" (click)="navigate.emit()">
       Checkout <span *ngIf="count">&nbsp;({{count}})</span>
     </button>
   `,
@@ -26,4 +26,5 @@ import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 })
 export class CheckoutComponent {
   @Input() count = 0;
+  @Output() navigate = new EventEmitter();
 }

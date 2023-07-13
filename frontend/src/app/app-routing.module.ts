@@ -11,6 +11,10 @@ const routes: Routes = [
     loadComponent: () => import('../views/smoothie-menu-view.component').then(m => m.SmoothieMenuViewComponent)
   },
   {
+    path: 'smoothies/checkout',
+    loadComponent: () => import('../views/checkout-view.component').then(m => m.CheckoutViewComponent)
+  },
+  {
     path: '**',
     redirectTo: 'smoothies',
     pathMatch: 'full'
